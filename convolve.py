@@ -31,7 +31,6 @@ def filter_image(
     ).real.astype(np.float32)
 
     if viz:
-        print("hello")
         _viz(image_freq_domain, kernel_freq_domain, filtered_image, image)
 
     return filtered_image

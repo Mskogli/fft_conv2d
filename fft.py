@@ -13,8 +13,8 @@ def _fft(x: np.ndarray) -> np.ndarray:
     if N <= 1:
         return x
 
-    even = _fft(x[0::2])  # Down to base case of recursion, return x
-    odd = _fft(x[1::2])  # Down to base case of recursion, return x
+    even = _fft(x[0::2])
+    odd = _fft(x[1::2])
 
     T = [np.exp(-2j * np.pi * k / N) * odd[k] for k in range(N // 2)]
 
@@ -31,7 +31,7 @@ def _ifft(x: np.ndarray) -> np.ndarray:
     if N <= 1:
         return x
 
-    x_conjugate = np.conjugate(x)  # Not needed for image data but meh
+    x_conjugate = np.conjugate(x)
 
     result = _fft(x_conjugate)
     result = np.conjugate(result)
