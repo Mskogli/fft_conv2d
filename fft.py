@@ -72,6 +72,8 @@ if __name__ == "__main__":
     # Sanity check on the 2D FFT/IFFT implementation
     image = imageio.imread("imgs/lena.png", mode="F")
 
+    my_ftt1 = _fft(np.random.random(4))
+
     np_fft2 = np.fft.fft2(image)
     np_ifft2 = np.fft.ifft2(np_fft2)
 

@@ -87,14 +87,40 @@ if __name__ == "__main__":
         kernel = _get_kernel(args.kernel, args.predefined_kernel)
         image, image_path = _load_image(args.image_path)
 
-        print("Filtering image with Kernel: \n", kernel)
+        if args.kernel == "SOBEL" and args.predefined_kernel:
 
-        filtered_image = filter_image(
-            image, kernel, skip_zero_freq_centering=args.no_centering, viz=args.viz
-        )
-        imageio.imsave(
-            _create_filtered_path(image_path), _normalize_image(filtered_image)
-        )
+            print("Filtering image with sobel operator")
+
+            filtered_image_gx = filter_image(
+                image,
+                kernel["Gx"],
+                skip_zero_freq_centering=args.no_centering,
+                viz=args.viz,
+            )
+            filtered_image_gy = filter_image(
+                image,
+                kernel["Gy"],
+                skip_zero_freq_centering=args.no_centering,
+                viz=args.viz,
+            )
+
+            imageio.imsave(
+                _create_filtered_path(image_path),
+                _normalize_image(np.sqrt(filtered_image_gx**2 + filtered_image_gy**2)),
+            )
+        else:
+            print("Filtering image with kernel: \n", kernel)
+
+            filtered_image = filter_image(
+                image,
+                kernel,
+                skip_zero_freq_centering=args.no_centering,
+                viz=args.viz,
+            )
+            imageio.imsave(
+                _create_filtered_path(image_path),
+                _normalize_image(filtered_image),
+            )
 
     else:
         raise Exception(
